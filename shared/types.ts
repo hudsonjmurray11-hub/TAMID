@@ -35,6 +35,13 @@ export interface RoundDef {
   answers: AnswerDef[];
 }
 
+export interface QuestionPack {
+  id: string;
+  name: string;
+  blurb: string;
+  rounds: RoundDef[];
+}
+
 export interface Factor {
   id: string;
   title: string;
@@ -90,6 +97,7 @@ export interface GameState {
   roundIndex: number; // -1 in lobby
   totalRounds: number;
   presetId: string;
+  packId: string;
   phaseStartedAt: number;
   deadline: number | null;
   paused: boolean;
@@ -165,6 +173,7 @@ export interface HostView {
   phaseMs: number | null;
   paused: boolean;
   presetId: string;
+  packId: string;
   players: { id: string; name: string; connected: boolean; answered: boolean; total: number; isBot: boolean }[];
   playerCount: number;
   answeredCount: number;
@@ -180,6 +189,7 @@ export interface PlayerView {
   kind: 'player';
   code: string;
   roomName: string;
+  packId: string;
   phase: Phase;
   roundIndex: number;
   totalRounds: number;

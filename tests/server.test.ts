@@ -180,6 +180,18 @@ describe('sessions & recovery', () => {
     expect(await emitAck(q, 'player:join', { code, name: 'Second wave' })).toMatchObject({ ok: true });
   });
 
+  it('lets only the host choose the question set', async () => {
+    const { host, hv, code } = await newRoom();
+    const p = await client();
+    const pv = lastView<PlayerView>(p, 'player:view');
+    await emitAck(p, 'player:join', { code, name: 'Picker' });
+    expect(await emitAck(p, 'host:action', { type: 'pack', packId: 'everyday' })).toEqual({ ok: false, error: 'not-host' });
+    await emitAck(host, 'host:action', { type: 'pack', packId: 'everyday' });
+    await until(() => hv.v?.packId === 'everyday' && pv.v?.packId === 'everyday');
+    await emitAck(host, 'host:action', { type: 'start' });
+    await until(() => pv.v?.prompt === 'Name something you pack for a beach day.');
+  });
+
   it('rejects submissions after the buzzer', async () => {
     const { host, hv, code } = await newRoom();
     const p = await client();

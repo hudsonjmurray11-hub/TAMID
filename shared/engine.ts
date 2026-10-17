@@ -1,6 +1,6 @@
 // The one game engine. Pure and deterministic given `now`, so the server,
 // solo mode and demo mode all run exactly the same rules.
-import { RARITY, ROUNDS } from '../content/game-content';
+import { ALL_ROUNDS, DEFAULT_PACK_ID, RARITY, getPack } from '../content/game-content';
 import { ALL_IN_GRACE_MS, DEFAULT_PRESET_ID, LATE_GRACE_MS, MAX_PLAYERS, getPreset } from '../content/timing';
 import { answerId, matcherFor, normalize } from './matcher';
 import type {
@@ -20,8 +20,10 @@ import type {
 import { TIER_ORDER } from './types';
 
 export interface EngineOptions {
+  /** Tests can pin specific rounds; otherwise the chosen question set is used. */
   rounds?: RoundDef[];
   presetId?: string;
+  packId?: string;
   /** Tests can pass custom timings; otherwise presets from content/timing.ts. */
   timing?: TimingPreset;
   maxPlayers?: number;
@@ -48,21 +50,23 @@ export function compareStandings(a: PlayerState, b: PlayerState): number {
 
 export class GameEngine {
   state: GameState;
-  readonly rounds: RoundDef[];
+  private fixedRounds?: RoundDef[];
   readonly maxPlayers: number;
   private timingOverride?: TimingPreset;
   private allInGraceMs: number;
 
   constructor(opts: EngineOptions = {}, now = Date.now(), restore?: GameState) {
-    this.rounds = opts.rounds ?? ROUNDS;
+    this.fixedRounds = opts.rounds;
     this.maxPlayers = opts.maxPlayers ?? MAX_PLAYERS;
     this.timingOverride = opts.timing;
     this.allInGraceMs = opts.allInGraceMs ?? ALL_IN_GRACE_MS;
+    if (restore && !restore.packId) restore.packId = DEFAULT_PACK_ID;
     this.state = restore ?? {
       phase: 'lobby',
       roundIndex: -1,
-      totalRounds: this.rounds.length,
+      totalRounds: (opts.rounds ?? getPack(opts.packId).rounds).length,
       presetId: opts.presetId ?? DEFAULT_PRESET_ID,
+      packId: getPack(opts.packId ?? DEFAULT_PACK_ID).id,
       phaseStartedAt: now,
       deadline: null,
       paused: false,
@@ -72,6 +76,11 @@ export class GameEngine {
       revision: 0,
       allInAt: null,
     };
+  }
+
+  /** Rounds of the current question set. */
+  get rounds(): RoundDef[] {
+    return this.fixedRounds ?? getPack(this.state.packId).rounds;
   }
 
   get timing(): TimingPreset {
@@ -130,6 +139,16 @@ export class GameEngine {
     p.connected = connected;
     this.checkAllIn(now);
     this.bump();
+  }
+
+  /** Pick the question set (lobby only). */
+  setPack(packId: string): boolean {
+    if (this.state.phase !== 'lobby' || this.fixedRounds) return false;
+    this.state.packId = getPack(packId).id;
+    this.state.totalRounds = this.rounds.length;
+    for (const p of Object.values(this.state.players)) p.subs = this.rounds.map(() => null);
+    this.bump();
+    return true;
   }
 
   setPreset(presetId: string): boolean {
@@ -308,7 +327,7 @@ export class GameEngine {
     if (s.deadline !== null && now > s.deadline + LATE_GRACE_MS) return { status: 'late', message: 'Just missed the buzzer.' };
     if (p.subs[roundIndex]) return { status: 'already', label: p.subs[roundIndex]!.label, message: 'You already locked in.' };
     const round = this.rounds[roundIndex];
-    const hit = matcherFor(round, this.rounds).match(text);
+    const hit = matcherFor(round, ALL_ROUNDS).match(text);
     if (!hit) {
       p.misses += 1;
       this.bump();
@@ -405,6 +424,7 @@ export class GameEngine {
       phaseMs: this.phaseLengthMs() || null,
       paused: s.paused,
       presetId: s.presetId,
+      packId: s.packId,
       players: s.order
         .map((id) => s.players[id])
         .filter(Boolean)
@@ -439,6 +459,7 @@ export class GameEngine {
       kind: 'player',
       code: meta.code,
       roomName: meta.roomName,
+      packId: s.packId,
       phase: s.phase,
       roundIndex: s.roundIndex,
       totalRounds: s.totalRounds,

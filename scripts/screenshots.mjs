@@ -156,6 +156,11 @@ try {
   await demo.goto(`${BASE}/demo`, { waitUntil: 'networkidle0' });
   await sleep(1200);
   await shot(demo, '20-demo-lobby');
+  const soloPhone = await (await browser.createBrowserContext()).newPage();
+  await soloPhone.setViewport({ width: 375, height: 667, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+  await soloPhone.goto(`${BASE}/play`, { waitUntil: 'networkidle0' });
+  await sleep(800);
+  await shot(soloPhone, '19-solo-phone-lobby');
   const solo = await browser.newPage();
   await solo.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
   await solo.setViewport({ width: 1440, height: 900 });

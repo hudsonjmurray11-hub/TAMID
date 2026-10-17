@@ -6,7 +6,7 @@ import type { HostAction } from '../../../shared/protocol';
 import type { HostView, Insight, Tier } from '../../../shared/types';
 import { play, useSound } from '../lib/sound';
 import { Journey } from '../scene/Journey';
-import { Dialog, Icon, OfflineBadge, Shield, Stamp, TierTag, Timer, Wordmark, useMediaQuery, useRemaining } from '../ui/kit';
+import { Dialog, Icon, OfflineBadge, RoutePicker, Shield, Stamp, TierTag, Timer, Wordmark, useMediaQuery, useRemaining } from '../ui/kit';
 import { Competencies, Crew, FullAnswerList, Podium, SourcesDetails, WhyItWorks } from './Finale';
 
 interface Props {
@@ -316,6 +316,9 @@ function LobbyPanel({ view, act, joinUrl, mode }: { view: HostView; act: (a: Hos
             </select>
           </label>
         </div>
+      </div>
+      <div className="card route-card">
+        <RoutePicker value={view.packId} onChange={(packId) => act({ type: 'pack', packId })} />
       </div>
       <div className="card seats" aria-label="Passengers">
         {view.players.length === 0 ? (

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { RARITY } from '../../../content/game-content';
+import { RARITY, getPack } from '../../../content/game-content';
 import type { PlayerView, SubmitResult, Tier } from '../../../shared/types';
 import { buzz, play, useSound } from '../lib/sound';
 import { Journey } from '../scene/Journey';
-import { Dialog, Icon, Shield, Stamp, TierTag, Timer, Wordmark, useMediaQuery, useRemaining } from '../ui/kit';
+import { Dialog, Icon, RoutePicker, Shield, Stamp, TierTag, Timer, Wordmark, useMediaQuery, useRemaining } from '../ui/kit';
 import { Competencies, Crew, FullAnswerList, Podium, SourcesDetails, WhyItWorks } from './Finale';
 import { FactSign } from './HostStage';
 
@@ -13,13 +13,14 @@ interface Props {
   submit: (text: string) => Promise<SubmitResult> | SubmitResult;
   banner?: { text: string; warn?: boolean } | null;
   onStart?: () => void;
+  onPack?: (packId: string) => void;
   onNext?: () => void;
   onTogglePause?: () => void;
   onRestart?: () => void;
   onLeave?: () => void;
 }
 
-export function PlayerStage({ view, mode, submit, banner, onStart, onNext, onTogglePause, onRestart, onLeave }: Props) {
+export function PlayerStage({ view, mode, submit, banner, onStart, onPack, onNext, onTogglePause, onRestart, onLeave }: Props) {
   const wide = useMediaQuery('(min-width: 900px)');
   const [sound, setSound] = useSound();
   const [dlg, setDlg] = useState<null | 'answers' | 'sources'>(null);
@@ -46,7 +47,7 @@ export function PlayerStage({ view, mode, submit, banner, onStart, onNext, onTog
 
   const panel = (
     <>
-      {view.phase === 'lobby' && <LobbyPanel view={view} mode={mode} onStart={onStart} onLeave={onLeave} />}
+      {view.phase === 'lobby' && <LobbyPanel view={view} mode={mode} onStart={onStart} onPack={onPack} onLeave={onLeave} />}
       {view.phase === 'answering' && <AnswerPanel view={view} submit={submit} remaining={remaining} mode={mode} />}
       {view.phase === 'reveal' && <RevealPanel view={view} remaining={remaining} mode={mode} onNext={onNext} onFull={() => setDlg('answers')} />}
       {view.phase === 'finale' && <FinalePanel view={view} mode={mode} onRestart={onRestart} onSources={() => setDlg('sources')} />}
@@ -143,7 +144,7 @@ export function PlayerStage({ view, mode, submit, banner, onStart, onNext, onTog
   );
 }
 
-function LobbyPanel({ view, mode, onStart, onLeave }: { view: PlayerView; mode: 'live' | 'solo'; onStart?: () => void; onLeave?: () => void }) {
+function LobbyPanel({ view, mode, onStart, onPack, onLeave }: { view: PlayerView; mode: 'live' | 'solo'; onStart?: () => void; onPack?: (packId: string) => void; onLeave?: () => void }) {
   if (mode === 'solo') {
     return (
       <div className="stack">
@@ -156,8 +157,14 @@ function LobbyPanel({ view, mode, onStart, onLeave }: { view: PlayerView; mode: 
               <TierTag key={t} tier={t} />
             ))}
           </div>
+          {onPack ? (
+            <>
+              <div className="perf" />
+              <RoutePicker value={view.packId} onChange={onPack} />
+            </>
+          ) : null}
         </div>
-        <button className="btn big block" onClick={onStart} autoFocus>
+        <button className="btn big block" onClick={onStart}>
           Start driving <Icon name="play" />
         </button>
       </div>
@@ -166,7 +173,9 @@ function LobbyPanel({ view, mode, onStart, onLeave }: { view: PlayerView; mode: 
   return (
     <div className="stack">
       <div className="ticket">
-        <div className="ticket-label">Boarding pass · {view.roomName}</div>
+        <div className="ticket-label">
+          Boarding pass · {view.roomName} · {getPack(view.packId).name}
+        </div>
         <h1 className="phone-title">You’re in, {view.me.name}!</h1>
         <p>
           Waiting for the driver to start. <b className="tabular">{view.playerCount}</b> {view.playerCount === 1 ? 'passenger' : 'passengers'} aboard.

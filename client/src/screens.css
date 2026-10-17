@@ -193,6 +193,66 @@
   font-weight: 700;
 }
 
+/* route picker (question set) */
+.routes {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.routes legend {
+  padding: 0;
+  margin-bottom: 8px;
+}
+.route-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.route {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+  padding: 10px 12px 8px;
+  border: 3px solid var(--ink);
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--navy);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+.route.on {
+  background: var(--sun);
+}
+.route-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  line-height: 1.1;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.05em;
+}
+.route-name svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex-shrink: 0;
+  margin-top: 0.02em;
+}
+.route-blurb {
+  font-size: 0.82em;
+  line-height: 1.25;
+  color: var(--muted);
+}
+.route.on .route-blurb {
+  color: var(--navy);
+}
+.route-card {
+  padding: 12px 14px;
+}
+
 /* seat map (answering) */
 .seats-grid {
   list-style: none;

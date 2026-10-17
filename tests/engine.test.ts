@@ -176,6 +176,30 @@ describe('players & rooms', () => {
   });
 });
 
+describe('question sets', () => {
+  it('lets the host switch sets in the lobby only, and plays the chosen set', () => {
+    const e = new GameEngine({ timing: T }, 0);
+    const id = e.addPlayer('Ana', 0).player!.id;
+    expect(e.state.packId).toBe('startup-road-trip');
+    expect(e.setPack('everyday')).toBe(true);
+    expect(e.round).toBeNull();
+    e.start(0);
+    expect(e.round!.prompt).toBe('Name something you pack for a beach day.');
+    expect(e.submit(id, 0, 'snorkel', 100).status).toBe('accepted');
+    expect(e.setPack('startup-road-trip')).toBe(false); // locked once the trip starts
+    e.restart(200);
+    expect(e.setPack('nope')).toBe(true); // unknown ids fall back to the default set
+    expect(e.state.packId).toBe('startup-road-trip');
+  });
+
+  it('restores saved games from before sets existed', () => {
+    const old = new GameEngine({ timing: T }, 0).state as unknown as Record<string, unknown>;
+    delete old.packId;
+    const e = new GameEngine({ timing: T }, 0, old as never);
+    expect(e.state.packId).toBe('startup-road-trip');
+  });
+});
+
 describe('bots', () => {
   it('play a full game with a realistic mix of tiers and some misses', () => {
     const e = new GameEngine({ timing: T }, 0);

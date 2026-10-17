@@ -29,7 +29,7 @@ Sources: [JNS on CBS data](https://www.jns.org/israels-population-hits-10178000/
 
 ### TAMID competencies in our project
 - **Pursuing Innovation.** The game rewards fresh, less obvious answers, and Round 4 asks what a self-driving car must notice.
-- **Cultivating Resilience.** Unrecognised answers can be retried, and Round 5 asks for a smart next move after a product flops.
+- **Cultivating Resilience.** Unrecognised answers can be retried, and Round 5 asks what to do when your new app gets no users.
 - **Empowering Leadership.** Every reveal shares the whole class's answers, and Round 6 asks how to help a friend start something new.
 
 *Notes: In the game, distances are points and rarity tiers are our own ranking, not survey data. We used primary or official sources where we could reach them and labelled single-person accounts as such.*

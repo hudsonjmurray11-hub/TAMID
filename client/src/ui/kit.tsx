@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { RARITY } from '../../../content/game-content';
+import { PACKS, RARITY } from '../../../content/game-content';
 import type { Tier } from '../../../shared/types';
 
 export function Wordmark({ size = 22, link = true }: { size?: number; link?: boolean }) {
@@ -23,6 +23,39 @@ export function Wordmark({ size = 22, link = true }: { size?: number; link?: boo
     <div className="wordmark" style={style}>
       {inner}
     </div>
+  );
+}
+
+/** Choose which question set to play (lobby only). */
+export function RoutePicker({ value, onChange }: { value: string; onChange: (packId: string) => void }) {
+  return (
+    <fieldset className="routes">
+      <legend className="ticket-label">Choose your route</legend>
+      <div className="route-options" role="radiogroup">
+        {PACKS.map((p) => {
+          const on = p.id === value;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              className={`route ${on ? 'on' : ''}`}
+              onClick={(e) => {
+                onChange(p.id);
+                if (e.detail > 0) e.currentTarget.blur();
+              }}
+            >
+              <span className="route-name">
+                {on ? <Icon name="check" /> : null}
+                {p.name}
+              </span>
+              <span className="route-blurb">{p.blurb}</span>
+            </button>
+          );
+        })}
+      </div>
+    </fieldset>
   );
 }
 

@@ -168,6 +168,10 @@ export class RoomManager {
         case 'preset':
           e.setPreset(String(a.presetId));
           break;
+        case 'pack':
+          e.setPack(String(a.packId));
+          room.bots?.reset();
+          break;
         case 'kick': {
           const id = String(a.playerId);
           if (e.removePlayer(id, now)) {

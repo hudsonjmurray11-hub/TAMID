@@ -8,7 +8,8 @@ export type HostAction =
   | { type: 'resume' }
   | { type: 'restart' }
   | { type: 'kick'; playerId: string }
-  | { type: 'preset'; presetId: string };
+  | { type: 'preset'; presetId: string }
+  | { type: 'pack'; packId: string };
 
 export type Ack<T = {}> = (res: ({ ok: true } & T) | { ok: false; error: string }) => void;
 

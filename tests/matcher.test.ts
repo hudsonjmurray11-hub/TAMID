@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { ROUNDS } from '../content/game-content';
+import { ALL_ROUNDS, ROUNDS } from '../content/game-content';
 import { RoundMatcher, editDistance, normalize, vocabulary } from '../shared/matcher';
 
-const VOCAB = vocabulary(ROUNDS);
+const VOCAB = vocabulary(ALL_ROUNDS);
 const m = (round: number) => new RoundMatcher(ROUNDS[round], VOCAB);
 
 describe('normalize', () => {
@@ -25,7 +25,7 @@ describe('normalize', () => {
 describe('every accepted answer and alias', () => {
   it('resolves to itself (label + all aliases, all rounds)', () => {
     let checked = 0;
-    for (const round of ROUNDS) {
+    for (const round of ALL_ROUNDS) {
       const matcher = new RoundMatcher(round);
       for (const a of round.answers) {
         for (const text of [a.label, a.label.toUpperCase(), ...(a.aliases ?? [])]) {
@@ -72,9 +72,9 @@ describe('matching examples', () => {
   });
 
   it('never turns a real answer from another round into a typo', () => {
-    for (const r of ROUNDS) {
+    for (const r of ALL_ROUNDS) {
       const matcher = new RoundMatcher(r, VOCAB);
-      for (const o of ROUNDS) {
+      for (const o of ALL_ROUNDS) {
         if (o === r) continue;
         for (const a of o.answers)
           for (const text of [a.label, ...(a.aliases ?? [])]) {
@@ -83,7 +83,7 @@ describe('matching examples', () => {
           }
       }
     }
-    expect(m(4).match('sheep')).toBeNull(); // not "sleep"
+    expect(new RoundMatcher(ALL_ROUNDS[10], VOCAB).match('sheep')).toBeNull(); // test round: not "sleep"
     expect(m(0).match('break')).toBeNull(); // not "bread"
   });
 

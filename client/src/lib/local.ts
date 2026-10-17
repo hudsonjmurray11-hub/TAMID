@@ -125,6 +125,10 @@ export class LocalGame {
       case 'preset':
         e.setPreset(a.presetId);
         break;
+      case 'pack':
+        e.setPack(a.packId);
+        this.bots?.reset();
+        break;
     }
     this.emitIfChanged(true);
   }

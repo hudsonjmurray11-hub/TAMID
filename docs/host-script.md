@@ -1,6 +1,6 @@
 # Host script: Next Stop: Tel Aviv (≈ 4:00)
 
-**Before class:** `/host` is on the projector (fullscreen), sound is optional, and **4 min (default)** is selected. `/demo` is open in a second tab showing **Offline ready**.
+**Before class:** `/host` is on the projector (fullscreen), sound is optional, **4 min (default)** is selected, and the route is **Startup Road Trip** (the set this script follows). `/demo` is open in a second tab showing **Offline ready**.
 
 **Speakers.** Each teammate owns one part, so all four are visible:
 - **N** = Narration & presentation (Sienna): runs the clicker / Space bar.
@@ -34,8 +34,8 @@ Lines in *italics* are optional if you're ahead of time. Answer timers advance o
 *(reveal)* **R:** "Mobileye, whose cameras help cars do exactly this, grew out of Hebrew University research. Intel bought it in 2017. Lab to product."
 *(optional, any time)* **V:** "Notice the skyline: the closer we get, the more detail appears."
 
-### 2:40–3:15 · Stop 5: *Your first product flopped. Name a smart next move.*
-*(answering)* **G (Cultivating Resilience):** "This one is **Cultivating Resilience**. In this game, a wrong answer isn't the end. You retry, just like founders do."
+### 2:40–3:15 · Stop 5: *You launch an app and nobody uses it. What do you do next?*
+*(answering)* **G (Cultivating Resilience):** "This one is **Cultivating Resilience**: your app flopped, so what's your next move? And in this game a wrong answer isn't the end either. You retry, just like founders do."
 *(reveal)* **R:** "Waze's co-founder says: fall in love with the problem, not your first solution."
 
 ### 3:15–3:50 · Stop 6: *A way to help a friend starting something new*
@@ -53,6 +53,17 @@ Lines in *italics* are optional if you're ahead of time. Answer timers advance o
 - **N:** "No single factor explains it. These five reinforce each other. Thanks for riding with us!"
 
 *Buffer:* the core game takes 4:00. With finale lines and applause, plan on 4:15–4:30, inside the 3–5 minute window. If you're running long, choose the **3 min sprint** preset in the lobby.
+
+---
+
+### Other route: Everyday Classics
+If you pick **Everyday Classics** in the lobby, the prompts are easier everyday ones, but the roadside facts and finale are the same. Swap the stop headings:
+1. *Something you pack for a beach day* → Netafim fact
+2. *Something your phone helps you do* → Waze fact
+3. *Something a new startup might need* → Yozma fact (Pursuing Innovation callout)
+4. *A way to get around a city* → Mobileye fact
+5. *You failed a test. Name something you'd do next* → Levine fact (Cultivating Resilience callout)
+6. *Somewhere people find new ideas* → paying-it-forward fact (Empowering Leadership callout)
 
 ---
 

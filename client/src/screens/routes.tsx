@@ -147,6 +147,7 @@ export function Play() {
       mode="solo"
       submit={submit}
       onStart={() => act({ type: 'start' })}
+      onPack={(packId) => act({ type: 'pack', packId })}
       onNext={() => act({ type: 'next' })}
       onTogglePause={() => act({ type: playerView.paused ? 'resume' : 'pause' })}
       onRestart={fresh}

@@ -47,7 +47,7 @@ The first visit must happen beforehand: a browser that has never loaded the app 
 ## How to play
 
 1. The host opens `/host` on the projector. Players scan the QR code or type the four-letter code.
-2. The host picks a game length (3, 4, 4½ or 5 min) and presses **Start the trip** (Space).
+2. The host picks a **route** (question set) and a game length (3, 4, 4½ or 5 min), then presses **Start the trip** (Space).
 3. Each round, everyone gets the same prompt (for example, *Name something that uses a lot of water*) and types **one** answer. The first accepted answer locks in. If the game doesn't recognise an answer, the player can retry until time runs out. **Need an idea?** shows a few common answers.
 4. When the round closes, the game reveals rarity, the van surges forward, the class's answers are tallied, and a one-line "roadside fact" about Israel appears.
 5. After six rounds the finale shows the podium, then five "exit signs" answering the TAMID question, the competencies, and the crew.
@@ -58,6 +58,17 @@ The first visit must happen beforehand: a browser that has never loaded the app 
 | ◆ Uncommon | +20 km |
 | ★ Rare | +35 km |
 | ✦ Hidden gem | +50 km |
+
+### Two routes (question sets)
+
+Choose one in the lobby of `/host`, `/demo` or `/play`:
+
+| Route | Prompts |
+| --- | --- |
+| **Startup Road Trip** (default) | Uses a lot of water · makes a road trip annoying · raise money for a project · a self-driving car must notice · your new app has no users · help a friend start something new |
+| **Everyday Classics** | Pack for a beach day · your phone helps you do · a new startup might need · get around a city · after failing a test · where people find new ideas |
+
+Both routes use the same roadside facts and finale. To add a third route, add an entry to `PACKS` in the content file. Round ids must be unique across routes.
 
 Rarity is a **designer-assigned ranking** of how obvious an answer feels. It is not survey data and not based on what the room picks. If several people give the same answer, each still gets its full award. Six hidden gems reach the 300 km destination, but you don't need 300 to win. Ties are broken by total distance, then the number of accepted answers, then the lowest total answer time. Distances are game points, not geography.
 
@@ -78,7 +89,7 @@ The top bar also has passengers (remove a player), pause, restart, sound (off by
 
 | What | Where |
 | --- | --- |
-| Prompts, accepted answers, aliases, rarity, roadside facts, finale factors, competencies, sources, team roles | [`content/game-content.ts`](content/game-content.ts) |
+| Question sets, prompts, accepted answers, aliases, rarity, roadside facts, finale factors, competencies, sources, team roles | [`content/game-content.ts`](content/game-content.ts) |
 | Timers and game-length presets, the player cap (60), grace periods | [`content/timing.ts`](content/timing.ts) |
 
 - Matching already ignores case, accents, punctuation, a leading "a/an/the/my", and simple plurals. It also forgives small typos (one in 6–8 letters, two in 9+, with the same first letter, only when exactly one answer is that close, and never for a word that's a real answer in another round). Add aliases only for real synonyms.
