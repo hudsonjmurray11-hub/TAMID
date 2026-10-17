@@ -1,0 +1,14 @@
+# Render Blueprint — one WebSocket-capable web service.
+# Keep ONE instance: live rooms live in this process's memory.
+services:
+  - type: web
+    name: next-stop-tel-aviv
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: false
+    envVars:
+      - key: NODE_VERSION
+        value: "22"

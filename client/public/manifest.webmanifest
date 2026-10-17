@@ -1,0 +1,9 @@
+{
+  "name": "Next Stop: Tel Aviv",
+  "short_name": "Next Stop",
+  "start_url": "/demo",
+  "display": "fullscreen",
+  "background_color": "#13213F",
+  "theme_color": "#13213F",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,646 @@
+/* ═══════════════════════════════════════════════════════════
+   NEXT STOP: TEL AVIV — brand system
+   Golden-hour travel poster · road-sign UI · luggage stickers
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --navy: #13213f;
+  --ink: #0b1530;
+  --sea: #1c7fb8;
+  --sign: #1b5fa8;
+  --van: #2f5bea;
+  --sand: #f2ddb0;
+  --sand-2: #e8cc93;
+  --sun: #ffc93c;
+  --coral: #f2674a;
+  --cream: #fff6e3;
+  --brown: #7a4a2a; /* tourist-sign brown for roadside facts */
+  --palm: #2e7d5b;
+  --muted: #5d6680;
+
+  --t-common: #e9dcc0;
+  --t-uncommon: #1c7fb8;
+  --t-rare: #ffc93c;
+  --t-gem: #f2674a;
+
+  --font-display: 'Rubik', system-ui, sans-serif;
+  --font-script: 'Shrikhand', 'Rubik', cursive;
+  --font-ui: 'Overpass', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --r: 14px;
+  --bw: 3px;
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
+  --focus: 0 0 0 3px var(--cream), 0 0 0 6px var(--van);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+body {
+  background: var(--navy);
+  color: var(--navy);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+a {
+  color: inherit;
+}
+:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+}
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Wordmark ───────────────────────────────────────────── */
+.wordmark {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 0.55em;
+  font-size: var(--wm-size, 22px);
+  user-select: none;
+  text-decoration: none;
+}
+.wm-script {
+  position: absolute;
+  top: -0.1em;
+  left: -0.25em;
+  z-index: 2;
+  font-family: var(--font-script);
+  font-size: 0.95em;
+  color: var(--sun);
+  transform: rotate(-7deg);
+  -webkit-text-stroke: 0.14em var(--ink);
+  paint-order: stroke fill;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.wm-sign {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  background: var(--sign);
+  color: var(--cream);
+  border: 0.12em solid var(--ink);
+  border-radius: 0.28em;
+  padding: 0.38em 0.5em 0.2em;
+  box-shadow: 0.14em 0.14em 0 var(--ink), inset 0 0 0 0.1em var(--sign), inset 0 0 0 0.17em var(--cream);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.15em;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.wm-sign small {
+  font-weight: 700;
+  font-size: 0.48em;
+  letter-spacing: 0;
+  opacity: 0.85;
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn {
+  --bg: var(--sun);
+  --fg: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 0.6em 1.15em 0.5em;
+  border: var(--bw) solid var(--ink);
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05em;
+  letter-spacing: 0.01em;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s;
+  touch-action: manipulation;
+}
+.btn:hover {
+  filter: brightness(1.05);
+}
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-sm);
+}
+.btn:disabled {
+  --bg: var(--sand);
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn.blue {
+  --bg: var(--van);
+  --fg: var(--cream);
+}
+.btn.cream {
+  --bg: var(--cream);
+}
+.btn.coral {
+  --bg: var(--coral);
+  --fg: var(--cream);
+}
+.btn svg {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+}
+.btn.ghost {
+  --bg: transparent;
+  --fg: var(--cream);
+  border-color: var(--cream);
+  box-shadow: none;
+}
+.btn.small {
+  min-height: 40px;
+  font-size: 0.92em;
+  padding: 0.45em 0.8em 0.35em;
+}
+.btn.big {
+  font-size: 1.3em;
+  min-height: 60px;
+}
+.btn.block {
+  width: 100%;
+}
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 2px solid var(--ink);
+  background: var(--cream);
+  color: var(--navy);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+.icon-btn[aria-pressed='true'] {
+  background: var(--sun);
+}
+.icon-btn svg {
+  width: 22px;
+  height: 22px;
+}
+.icon-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* ── Panels: ticket + sign ──────────────────────────────── */
+.ticket {
+  --notch: 12px;
+  position: relative;
+  background: var(--cream);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  border: var(--bw) solid var(--ink);
+  -webkit-mask: radial-gradient(circle var(--notch) at 0 var(--notch-y, 50%), transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--notch-y, 50%), transparent 98%, #000) right / 51% 100% no-repeat;
+  mask: radial-gradient(circle var(--notch) at 0 var(--notch-y, 50%), transparent 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--notch-y, 50%), transparent 98%, #000) right / 51% 100% no-repeat;
+}
+.ticket .perf {
+  border-top: 3px dashed rgba(19, 33, 63, 0.25);
+  margin: 14px -20px;
+}
+.ticket-label {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 0.78em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.card {
+  background: var(--cream);
+  border: var(--bw) solid var(--ink);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+}
+.sign {
+  background: var(--sign);
+  color: var(--cream);
+  border: var(--bw) solid var(--ink);
+  border-radius: 12px;
+  box-shadow: var(--shadow), inset 0 0 0 3px var(--sign), inset 0 0 0 5px var(--cream);
+  padding: 14px 16px;
+}
+.sign.brown {
+  background: var(--brown);
+  box-shadow: var(--shadow), inset 0 0 0 3px var(--brown), inset 0 0 0 5px var(--cream);
+}
+.sign.green {
+  background: var(--palm);
+  box-shadow: var(--shadow), inset 0 0 0 3px var(--palm), inset 0 0 0 5px var(--cream);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.8em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 2px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  background: var(--cream);
+  font-weight: 800;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+.chip.dark {
+  background: var(--navy);
+  color: var(--cream);
+  border-color: var(--cream);
+}
+.chip.demo {
+  background: var(--coral);
+  color: var(--cream);
+}
+
+/* ── Route shield (distance) ────────────────────────────── */
+.shield {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: var(--sh, 92px);
+  aspect-ratio: 1 / 1.08;
+  color: var(--cream);
+  font-family: var(--font-display);
+}
+.shield svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.shield .unit,
+.shield .num {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  line-height: 1;
+}
+.shield .unit {
+  top: 20.6%;
+  font-family: var(--font-ui);
+  font-weight: 900;
+  font-size: calc(var(--sh, 92px) * 0.095);
+  letter-spacing: 0.14em;
+  color: var(--navy);
+}
+.shield .num {
+  top: 41%;
+  font-weight: 900;
+  font-size: calc(var(--sh, 92px) * 0.3);
+}
+
+/* ── Rarity stamps (luggage stickers) ───────────────────── */
+.tier {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px 1px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.82em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.tier .sym {
+  font-size: 1.05em;
+  line-height: 1;
+}
+.tier-common {
+  background: var(--t-common);
+  color: var(--navy);
+}
+.tier-uncommon {
+  background: var(--t-uncommon);
+  color: var(--cream);
+}
+.tier-rare {
+  background: var(--t-rare);
+  color: var(--navy);
+}
+.tier-gem {
+  background: var(--t-gem);
+  color: var(--cream);
+}
+.stamp {
+  --c: var(--t-common);
+  --fg: var(--navy);
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  text-align: center;
+  width: var(--st, 200px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--c);
+  color: var(--fg);
+  border: 4px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink), inset 0 0 0 8px var(--c), inset 0 0 0 11px currentColor;
+  font-family: var(--font-display);
+  transform: rotate(-8deg);
+}
+.stamp.uncommon {
+  --c: var(--t-uncommon);
+  --fg: var(--cream);
+}
+.stamp.rare {
+  --c: var(--t-rare);
+}
+.stamp.gem {
+  --c: var(--t-gem);
+  --fg: var(--cream);
+  border-style: solid;
+}
+.stamp .s-sym {
+  font-size: calc(var(--st, 200px) * 0.16);
+  line-height: 1;
+}
+.stamp > div {
+  max-width: 78%;
+}
+.stamp .s-tier {
+  font-weight: 900;
+  font-size: calc(var(--st, 200px) * 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.stamp .s-km {
+  font-weight: 900;
+  font-size: calc(var(--st, 200px) * 0.17);
+  white-space: nowrap;
+  line-height: 1;
+}
+.stamp-in {
+  animation: stamp-in 0.55s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+@keyframes stamp-in {
+  0% {
+    transform: scale(2.1) rotate(10deg);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(-8deg);
+  }
+}
+
+/* ── Timer (road dashes) ────────────────────────────────── */
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.timer-track {
+  position: relative;
+  flex: 1;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--navy);
+  border: 2px solid var(--ink);
+  overflow: hidden;
+}
+.timer-fill {
+  position: absolute;
+  inset: 0;
+  right: auto;
+  background: repeating-linear-gradient(90deg, var(--sun) 0 18px, transparent 18px 28px);
+  transition: width 0.25s linear;
+}
+.timer.low .timer-fill {
+  background: repeating-linear-gradient(90deg, var(--coral) 0 18px, transparent 18px 28px);
+}
+.timer-num {
+  min-width: 2.4ch;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.6em;
+  text-align: right;
+}
+
+/* ── Dialogs ────────────────────────────────────────────── */
+dialog.dlg {
+  width: min(680px, calc(100vw - 32px));
+  max-height: min(86vh, 900px);
+  padding: 0;
+  border: var(--bw) solid var(--ink);
+  border-radius: 18px;
+  background: var(--cream);
+  color: var(--navy);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+dialog.dlg::backdrop {
+  background: rgba(11, 21, 48, 0.62);
+}
+.dlg-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 12px 20px;
+  background: var(--cream);
+  border-bottom: 3px dashed rgba(19, 33, 63, 0.2);
+}
+.dlg-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.3em;
+}
+.dlg-body {
+  padding: 16px 20px 22px;
+}
+
+/* ── Stage: full-bleed scene + overlays ─────────────────── */
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--navy);
+}
+.stage > canvas,
+.scene-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  pointer-events: none;
+}
+.topbar > * {
+  pointer-events: auto;
+}
+.topbar .group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.banner {
+  position: absolute;
+  top: 74px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8;
+  padding: 8px 16px 6px;
+  border-radius: 12px;
+  border: 2px solid var(--ink);
+  background: var(--sun);
+  color: var(--navy);
+  font-weight: 800;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+}
+.banner.warn {
+  background: var(--coral);
+  color: var(--cream);
+}
+
+/* ── Utility ────────────────────────────────────────────── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.spread {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.muted {
+  color: var(--muted);
+}
+.shake {
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(-8px);
+  }
+  40%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+.pop {
+  animation: pop 0.35s cubic-bezier(0.2, 1.5, 0.4, 1) both;
+}
+@keyframes pop {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+}
+.fade-up {
+  animation: fade-up 0.4s ease both;
+}
+@keyframes fade-up {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+.src {
+  font-size: 0.82em;
+  color: var(--muted);
+}
+.src a {
+  color: var(--sign);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
