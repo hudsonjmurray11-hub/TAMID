@@ -624,30 +624,51 @@
   text-overflow: ellipsis;
 }
 .fulllist {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 .fulllist ul {
   list-style: none;
   margin: 8px 0 0;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 .fulllist li {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-  border-bottom: 1px dashed rgba(19, 33, 63, 0.18);
+  gap: 6px;
+  padding: 4px 10px 2px;
+  border: 2px solid rgba(19, 33, 63, 0.18);
+  border-radius: 999px;
+  background: #fffaf0;
   font-weight: 600;
+  font-size: 0.95em;
+}
+.fulllist li.picked {
+  border-color: var(--navy);
+  background: var(--sand);
 }
 .fulllist li.mine {
   font-weight: 900;
-  color: var(--sign);
+  color: var(--cream);
+  background: var(--sign);
+  border-color: var(--ink);
+}
+.fulllist li.mine .chip {
+  padding: 0 6px;
+  font-size: 0.75em;
+  color: var(--navy);
 }
 .fulllist .cnt {
-  margin-left: auto;
   font-weight: 900;
+  font-size: 0.85em;
+}
+.fl-note {
+  margin: 0;
+  font-size: 0.85em;
 }
 .sources h3 {
   font-family: var(--font-display);

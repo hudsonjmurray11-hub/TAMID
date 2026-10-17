@@ -308,7 +308,7 @@ export class GameEngine {
     if (s.deadline !== null && now > s.deadline + LATE_GRACE_MS) return { status: 'late', message: 'Just missed the buzzer.' };
     if (p.subs[roundIndex]) return { status: 'already', label: p.subs[roundIndex]!.label, message: 'You already locked in.' };
     const round = this.rounds[roundIndex];
-    const hit = matcherFor(round).match(text);
+    const hit = matcherFor(round, this.rounds).match(text);
     if (!hit) {
       p.misses += 1;
       this.bump();

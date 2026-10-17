@@ -50,9 +50,22 @@ export function editDistance(a: string, b: string, max = 3): number {
 
 /** How many typos we tolerate for a key of this length. */
 function typoBudget(len: number): number {
-  if (len < 5) return 0;
+  if (len < 6) return 0;
   if (len < 9) return 1;
   return 2;
+}
+
+/** Every answer/alias key across the given rounds. */
+export function vocabulary(rounds: RoundDef[]): Set<string> {
+  const v = new Set<string>();
+  for (const r of rounds)
+    for (const a of r.answers)
+      for (const raw of [a.label, ...(a.aliases ?? [])]) {
+        const n = normalize(raw);
+        v.add(n);
+        v.add(n.replace(/ /g, ''));
+      }
+  return v;
 }
 
 export function answerId(roundId: string, def: AnswerDef): string {
@@ -70,7 +83,11 @@ export class RoundMatcher {
   private keys: { key: string; id: string; def: AnswerDef }[] = [];
   readonly conflicts: string[] = [];
 
-  constructor(round: RoundDef) {
+  /**
+   * @param known Words that are real answers somewhere in the game. They are
+   * never fuzzy-matched, so "sheep" can't become "sleep" or "break" "bread".
+   */
+  constructor(round: RoundDef, private known: Set<string> = new Set()) {
     for (const def of round.answers) {
       const id = answerId(round.id, def);
       for (const raw of [def.label, ...(def.aliases ?? [])]) {
@@ -95,8 +112,10 @@ export class RoundMatcher {
     if (hit) return { answer: hit.def, id: hit.id, exact: true };
 
     // Conservative typo tolerance: same first letter, small budget, and a
-    // unique best answer (no other answer equally close).
+    // unique best answer (no other answer equally close). Real words from
+    // other rounds are never treated as typos.
     const compact = n.replace(/ /g, '');
+    if (this.known.has(n) || this.known.has(compact)) return null;
     let best: { dist: number; id: string; def: AnswerDef } | null = null;
     let tie = false;
     for (const k of this.keys) {
@@ -118,10 +137,13 @@ export class RoundMatcher {
 }
 
 const cache = new Map<string, RoundMatcher>();
-export function matcherFor(round: RoundDef): RoundMatcher {
+const vocabCache = new WeakMap<RoundDef[], Set<string>>();
+export function matcherFor(round: RoundDef, allRounds: RoundDef[] = [round]): RoundMatcher {
   let m = cache.get(round.id);
   if (!m) {
-    m = new RoundMatcher(round);
+    let v = vocabCache.get(allRounds);
+    if (!v) vocabCache.set(allRounds, (v = vocabulary(allRounds)));
+    m = new RoundMatcher(round, v);
     cache.set(round.id, m);
   }
   return m;

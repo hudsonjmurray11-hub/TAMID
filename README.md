@@ -81,7 +81,7 @@ The top bar also has passengers (remove a player), pause, restart, sound (off by
 | Prompts, accepted answers, aliases, rarity, roadside facts, finale factors, competencies, sources, team roles | [`content/game-content.ts`](content/game-content.ts) |
 | Timers and game-length presets, the player cap (60), grace periods | [`content/timing.ts`](content/timing.ts) |
 
-- Matching already ignores case, accents, punctuation, a leading "a/an/the/my", and simple plurals. It also forgives small typos (one in 5–8 letters, two in 9+, with the same first letter, and only when exactly one answer is that close). Add aliases only for real synonyms.
+- Matching already ignores case, accents, punctuation, a leading "a/an/the/my", and simple plurals. It also forgives small typos (one in 6–8 letters, two in 9+, with the same first letter, only when exactly one answer is that close, and never for a word that's a real answer in another round). Add aliases only for real synonyms.
 - After editing, run `npm test`. It fails if an alias points at two answers, a round has fewer than 30 answers, or a fact lacks a source URL.
 - To rename the crew, edit `TEAM_ROLES` in the content file.
 

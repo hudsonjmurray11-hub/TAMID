@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { ROUNDS } from '../content/game-content';
-import { RoundMatcher, editDistance, normalize } from '../shared/matcher';
+import { RoundMatcher, editDistance, normalize, vocabulary } from '../shared/matcher';
 
-const m = (round: number) => new RoundMatcher(ROUNDS[round]);
+const VOCAB = vocabulary(ROUNDS);
+const m = (round: number) => new RoundMatcher(ROUNDS[round], VOCAB);
 
 describe('normalize', () => {
   it('ignores case, punctuation, accents, fillers and simple plurals', () => {
@@ -68,6 +69,22 @@ describe('matching examples', () => {
     expect(m(1).match('call of duty')).toBeNull();
     expect(m(2).match('a pony')).toBeNull();
     expect(m(5).match('the moon')).toBeNull();
+  });
+
+  it('never turns a real answer from another round into a typo', () => {
+    for (const r of ROUNDS) {
+      const matcher = new RoundMatcher(r, VOCAB);
+      for (const o of ROUNDS) {
+        if (o === r) continue;
+        for (const a of o.answers)
+          for (const text of [a.label, ...(a.aliases ?? [])]) {
+            const hit = matcher.match(text);
+            expect(!hit || hit.exact, `${r.id} fuzzy-matched "${text}" → ${hit?.answer.label}`).toBe(true);
+          }
+      }
+    }
+    expect(m(4).match('sheep')).toBeNull(); // not "sleep"
+    expect(m(0).match('break')).toBeNull(); // not "bread"
   });
 
   it('requires the same first letter for fuzzy matches', () => {

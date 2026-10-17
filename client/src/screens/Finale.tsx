@@ -139,6 +139,9 @@ export function FullAnswerList({ list, tallies, mine }: { list: FullAnswer[]; ta
   const tiers = ['gem', 'rare', 'uncommon', 'common'] as const;
   return (
     <div className="fulllist">
+      <p className="fl-note muted">
+        {list.length} accepted answers, rarest first.{tallies?.length ? ' Highlighted = picked this round (×count).' : ''}
+      </p>
       {tiers.map((tier) => (
         <section key={tier}>
           <div className="fl-head">
@@ -150,7 +153,7 @@ export function FullAnswerList({ list, tallies, mine }: { list: FullAnswer[]; ta
               .map((a) => {
                 const n = counts.get(a.label);
                 return (
-                  <li key={a.label} className={a.label === mine ? 'mine' : ''}>
+                  <li key={a.label} className={a.label === mine ? 'mine' : n ? 'picked' : ''}>
                     <span>{a.label}</span>
                     {a.label === mine ? <span className="chip">yours</span> : null}
                     {n ? <span className="cnt tabular">×{n}</span> : null}

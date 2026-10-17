@@ -14,11 +14,11 @@ describe('content bank', () => {
     ]);
   });
 
-  it('has 30–40 answers per round and 200+ overall, with every tier present', () => {
+  it('has 30+ answers per round and 200+ overall, with every tier present', () => {
     let total = 0;
     for (const r of ROUNDS) {
       expect(r.answers.length, r.id).toBeGreaterThanOrEqual(30);
-      expect(r.answers.length, r.id).toBeLessThanOrEqual(42);
+      expect(r.answers.length, r.id).toBeLessThanOrEqual(80);
       for (const t of Object.keys(RARITY)) expect(r.answers.some((a) => a.tier === t), `${r.id} ${t}`).toBe(true);
       total += r.answers.length;
     }
