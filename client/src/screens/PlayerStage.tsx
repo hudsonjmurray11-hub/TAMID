@@ -203,6 +203,12 @@ function AnswerPanel({ view, submit, remaining, mode }: { view: PlayerView; subm
     if (window.matchMedia('(pointer: fine)').matches) inputRef.current?.focus();
   }, [view.roundIndex]);
 
+  // After a miss the field is cleared (easier than deleting on a phone)
+  // and the form re-mounts to replay the shake; keep focus for the retry.
+  useEffect(() => {
+    if (shake) inputRef.current?.focus();
+  }, [shake]);
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (busy || !text.trim()) return;
@@ -217,8 +223,8 @@ function AnswerPanel({ view, submit, remaining, mode }: { view: PlayerView; subm
       play('reject');
       buzz([20, 40, 20]);
       setShake((x) => x + 1);
-      setMsg(res.message ?? 'Not on our map — try another!');
-      inputRef.current?.select();
+      setMsg(`“${text.trim().slice(0, 30)}” isn’t on our map — try another!`);
+      setText('');
     } else {
       setMsg(res.message ?? 'Couldn’t lock that in.');
     }

@@ -18,29 +18,29 @@ describe('scoring', () => {
   it('awards each rarity tier its distance at reveal, not before', () => {
     const { e, ids } = setup(4);
     e.start(0);
-    expect(e.submit(ids[0], 0, 'towel', 100).status).toBe('accepted');
-    expect(e.submit(ids[1], 0, 'beach umbrella', 200).status).toBe('accepted');
-    expect(e.submit(ids[2], 0, 'snorkel', 300).status).toBe('accepted');
-    expect(e.submit(ids[3], 0, 'first aid kit', 400).status).toBe('accepted');
+    expect(e.submit(ids[0], 0, 'shower', 100).status).toBe('accepted');
+    expect(e.submit(ids[1], 0, 'garden', 200).status).toBe('accepted');
+    expect(e.submit(ids[2], 0, 'farming', 300).status).toBe('accepted');
+    expect(e.submit(ids[3], 0, 'jeans', 400).status).toBe('accepted');
     expect(e.state.players[ids[0]].total).toBe(0);
     // hidden until reveal
-    expect(e.playerView(ids[3], meta, 500)!.mine).toEqual({ label: 'First-aid kit', tier: null, km: null });
+    expect(e.playerView(ids[3], meta, 500)!.mine).toEqual({ label: 'Jeans', tier: null, km: null });
     expect(e.hostView(meta, 500).reveal).toBeNull();
     e.tick(1000); // everyone in → closes after grace
     expect(e.state.phase).toBe('reveal');
     expect(ids.map((id) => e.state.players[id].total)).toEqual([RARITY.common.km, RARITY.uncommon.km, RARITY.rare.km, RARITY.gem.km]);
     expect([10, 20, 35, 50]).toEqual(ids.map((id) => e.state.players[id].total));
     const v = e.playerView(ids[3], meta, 1000)!;
-    expect(v.mine).toEqual({ label: 'First-aid kit', tier: 'gem', km: 50 });
+    expect(v.mine).toEqual({ label: 'Jeans', tier: 'gem', km: 50 });
   });
 
   it('lets several players share an answer without reducing its award', () => {
     const { e, ids } = setup(3);
     e.start(0);
-    for (const id of ids) e.submit(id, 0, 'snorkel', 100);
+    for (const id of ids) e.submit(id, 0, 'farming', 100);
     e.next(200);
     for (const id of ids) expect(e.state.players[id].total).toBe(35);
-    expect(e.revealInfo()!.tallies).toEqual([{ answerId: 'beach:snorkel', label: 'Snorkel', tier: 'rare', km: 35, count: 3 }]);
+    expect(e.revealInfo()!.tallies).toEqual([{ answerId: 'water:farming', label: 'Farming', tier: 'rare', km: 35, count: 3 }]);
   });
 });
 
@@ -51,27 +51,27 @@ describe('submissions', () => {
     expect(e.submit(ids[0], 0, 'spaceship', 100).status).toBe('unknown');
     expect(e.submit(ids[0], 0, 'still nope', 200).status).toBe('unknown');
     expect(e.state.players[ids[0]].misses).toBe(2);
-    expect(e.submit(ids[0], 0, 'towel', 300).status).toBe('accepted');
-    const dup = e.submit(ids[0], 0, 'first aid kit', 400);
+    expect(e.submit(ids[0], 0, 'shower', 300).status).toBe('accepted');
+    const dup = e.submit(ids[0], 0, 'jeans', 400);
     expect(dup.status).toBe('already');
-    expect(e.state.players[ids[0]].subs[0]!.label).toBe('Towel');
+    expect(e.state.players[ids[0]].subs[0]!.label).toBe('Shower');
   });
 
   it('rejects stale, closed, late, paused and unknown-player submissions', () => {
     const { e, ids } = setup(2);
-    expect(e.submit(ids[0], 0, 'towel', 0).status).toBe('stale'); // lobby, round -1
+    expect(e.submit(ids[0], 0, 'shower', 0).status).toBe('stale'); // lobby, round -1
     e.start(0);
-    expect(e.submit('ghost', 0, 'towel', 10).status).toBe('no-player');
-    expect(e.submit(ids[0], 1, 'towel', 10).status).toBe('stale');
+    expect(e.submit('ghost', 0, 'shower', 10).status).toBe('no-player');
+    expect(e.submit(ids[0], 1, 'shower', 10).status).toBe('stale');
     expect(e.submit(ids[0], 0, '   ', 10).status).toBe('invalid');
     e.pause(100);
-    expect(e.submit(ids[0], 0, 'towel', 200).status).toBe('paused');
+    expect(e.submit(ids[0], 0, 'shower', 200).status).toBe('paused');
     e.resume(300);
     const deadline = e.state.deadline!;
-    expect(e.submit(ids[0], 0, 'towel', deadline + LATE_GRACE_MS + 1).status).toBe('late');
-    expect(e.submit(ids[1], 0, 'towel', deadline + LATE_GRACE_MS - 1).status).toBe('accepted');
+    expect(e.submit(ids[0], 0, 'shower', deadline + LATE_GRACE_MS + 1).status).toBe('late');
+    expect(e.submit(ids[1], 0, 'shower', deadline + LATE_GRACE_MS - 1).status).toBe('accepted');
     e.next(deadline + 1000);
-    expect(e.submit(ids[0], 0, 'towel', deadline + 1100).status).toBe('closed');
+    expect(e.submit(ids[0], 0, 'shower', deadline + 1100).status).toBe('closed');
   });
 });
 
@@ -115,7 +115,7 @@ describe('timers', () => {
     e.start(0);
     e.pause(2000);
     e.resume(50_000);
-    e.submit(ids[0], 0, 'towel', 51_000);
+    e.submit(ids[0], 0, 'shower', 51_000);
     expect(e.state.players[ids[0]].subs[0]!.ms).toBe(3000);
   });
 
@@ -123,7 +123,7 @@ describe('timers', () => {
     const { e, ids } = setup(2);
     e.start(0);
     e.setConnected(ids[1], false, 50);
-    e.submit(ids[0], 0, 'towel', 100);
+    e.submit(ids[0], 0, 'shower', 100);
     expect(e.state.allInAt).toBe(100);
     expect(e.tick(599)).toBe(false);
     expect(e.tick(600)).toBe(true);
@@ -150,7 +150,7 @@ describe('players & rooms', () => {
   it('restart clears scores but keeps remaining players, and new players may join again', () => {
     const { e, ids } = setup(3);
     e.start(0);
-    e.submit(ids[0], 0, 'snorkel', 100);
+    e.submit(ids[0], 0, 'farming', 100);
     e.next(200);
     e.removePlayer(ids[2]);
     e.restart(300);
@@ -167,9 +167,9 @@ describe('players & rooms', () => {
   it('breaks ties by distance, then accepted answers, then total response time', () => {
     const { e, ids } = setup(3);
     e.start(0);
-    e.submit(ids[0], 0, 'towel', 3000); // 10 km, slow
-    e.submit(ids[1], 0, 'sunscreen', 1000); // 10 km, fast
-    e.submit(ids[2], 0, 'snorkel', 5000); // 35 km
+    e.submit(ids[0], 0, 'shower', 3000); // 10 km, slow
+    e.submit(ids[1], 0, 'bath', 1000); // 10 km, fast
+    e.submit(ids[2], 0, 'farming', 5000); // 35 km
     e.next(6000);
     const order = e.standings().map((s) => s.name);
     expect(order).toEqual(['P2', 'P1', 'P0']);

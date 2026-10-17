@@ -1,6 +1,6 @@
 # Background research: Why is the Israeli startup ecosystem so effective?
 
-*TAMID Fall 2026 Israel Connection Creative Project, Group 3. This page is the foundation for our game, **Next Stop: Tel Aviv**.*
+*TAMID Fall 2026 Israel Connection Creative Project, Group 3. This page is the foundation for our game, **Next Stop: Tel Aviv**. Each of the game's six questions leads into one of the facts below.*
 
 **Short answer.** No single cause explains it. Five forces reinforce each other: dense talent networks, a culture of learning from failure, public money that pulled in private money, research with a path to market, and a small home market that pushes companies to think globally. Israeli founders come from many different backgrounds, so treat these as tendencies, not rules.
 
@@ -28,8 +28,8 @@ Israel has about 10.2 million residents (CBS estimate, end of 2025), so most sta
 Sources: [JNS on CBS data](https://www.jns.org/israels-population-hits-10178000/) · [Israel Innovation Authority, 2025 report](https://innovationisrael.org.il/en/report/the-israeli-high-tech-sector/)
 
 ### TAMID competencies in our project
-- **Pursuing Innovation.** The game rewards fresh, less obvious answers, and Round 3 asks what a startup really needs.
-- **Cultivating Resilience.** Unrecognised answers can be retried, and Round 5 asks for a useful next move after a flop.
-- **Empowering Leadership.** Every reveal shares the whole class's answers, and Round 6 ends on founders helping founders.
+- **Pursuing Innovation.** The game rewards fresh, less obvious answers, and Round 4 asks what a self-driving car must notice.
+- **Cultivating Resilience.** Unrecognised answers can be retried, and Round 5 asks for a smart next move after a product flops.
+- **Empowering Leadership.** Every reveal shares the whole class's answers, and Round 6 asks how to help a friend start something new.
 
 *Notes: In the game, distances are points and rarity tiers are our own ranking, not survey data. We used primary or official sources where we could reach them and labelled single-person accounts as such.*

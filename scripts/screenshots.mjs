@@ -78,14 +78,14 @@ try {
   await shot(host, '03-host-lobby');
 
   const answers = [
-    ['towel', 'sunscreen', 'umbrella', 'snorkel', 'matkot', 'first aid kit', 'sunglasses', 'cooler', 'baby powder'],
-    ['text', 'take photos', 'maps', 'translate', 'shazam', 'pay', 'email', 'flashlight'],
-    ['money', 'mentor', 'a team', 'customers', 'pitch deck', 'a problem to solve', 'coffee', 'lawyer'],
-    ['bus', 'bike', 'walk', 'scooter', 'sherut', 'zipline', 'tram', 'kayak'],
+    ['shower', 'laundry', 'pool', 'garden', 'farming', 'jeans', 'toilet', 'golf course', 'data centers'],
+    ['traffic', 'bathroom breaks', 'getting lost', 'tolls', 'backseat drivers', 'missed exit', 'kids', 'potholes'],
+    ['ask your parents', 'bake sale', 'gofundme', 'investors', 'government grant', 'pre orders', 'get a job', 'accelerator'],
+    ['stop sign', 'pedestrians', 'cyclists', 'animals', 'school zone', 'a ball', 'potholes', 'turn signals'],
     ['try again', 'ask for help', 'pivot', 'post mortem', 'share what you learned', 'take a break'],
-    ['shower', 'books', 'travel', 'hackathon', 'mistakes', 'museum', 'kids', 'coffee shop'],
+    ['encourage them', 'give advice', 'share it online', 'introductions', 'mentor them', 'pay it forward', 'buy their product', 'feedback'],
   ];
-  const phoneAnswers = ['first aid kit', 'translate', 'mentor', 'sherut', 'share what you learned', 'a market'];
+  const phoneAnswers = ['jeans', 'backseat drivers', 'government grant', 'a ball', 'share what you learned', 'introductions'];
 
   for (let round = 0; round < 6; round++) {
     if (round === 0) await host.keyboard.press('Space');
@@ -102,7 +102,6 @@ try {
     if (round === 0) {
       await sleep(500);
       await shot(p0, '13-phone-retry');
-      await p0.click('#answer', { clickCount: 3 });
       await p0.type('#answer', phoneAnswers[0]);
       await p0.keyboard.press('Enter');
       await sleep(500);
@@ -163,7 +162,7 @@ try {
   await solo.goto(`${BASE}/play`, { waitUntil: 'networkidle0' });
   await solo.click('.btn.big');
   await sleep(800);
-  await solo.type('#answer', 'snorkel');
+  await solo.type('#answer', 'farming');
   await solo.keyboard.press('Enter');
   await sleep(2500);
   await shot(solo, '21-solo-desktop-reveal-reduced-motion');

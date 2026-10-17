@@ -6,18 +6,18 @@ const m = (round: number) => new RoundMatcher(ROUNDS[round]);
 
 describe('normalize', () => {
   it('ignores case, punctuation, accents, fillers and simple plurals', () => {
-    expect(normalize('  SUNSCREEN!! ')).toBe('sunscreen');
+    expect(normalize('  SHOWER!! ')).toBe('shower');
     expect(normalize('Café')).toBe('cafe');
-    expect(normalize('the Towels')).toBe('towel');
-    expect(normalize('a first-aid kit')).toBe('first aid kit');
+    expect(normalize('the Showers')).toBe('shower');
+    expect(normalize('a self-driving car')).toBe('self driving car');
     expect(normalize('Don’t give up')).toBe(normalize("dont give up"));
     expect(normalize('Buses')).toBe('bus');
     expect(normalize('Bus')).toBe('bus');
   });
 
   it('measures typos with transpositions', () => {
-    expect(editDistance('snorkel', 'snorkle')).toBe(1);
-    expect(editDistance('umbrella', 'umbrela')).toBe(1);
+    expect(editDistance('potholes', 'potholse')).toBe(1);
+    expect(editDistance('dishwasher', 'dishwahser')).toBe(1);
   });
 });
 
@@ -40,36 +40,37 @@ describe('every accepted answer and alias', () => {
 
 describe('matching examples', () => {
   it('accepts common spellings, synonyms and small typos', () => {
-    const beach = m(0);
-    expect(beach.match('sun block')?.answer.label).toBe('Sunscreen');
-    expect(beach.match('Sunscren')?.answer.label).toBe('Sunscreen');
-    expect(beach.match('umbrela')?.answer.label).toBe('Beach umbrella');
-    expect(beach.match('snorkle')?.answer.label).toBe('Snorkel');
-    expect(beach.match('Fisrt aid kit')?.answer.label).toBe('First-aid kit');
-    expect(beach.match('BAND-AIDS')?.answer.label).toBe('First-aid kit');
-    expect(beach.match('flipflops')?.answer.label).toBe('Flip-flops');
-    expect(m(1).match('Google Maps')?.answer.label).toBe('Navigate');
-    expect(m(2).match('VCs')?.answer.label).toBe('Investors');
-    expect(m(3).match('bicycles')?.answer.label).toBe('Bike');
-    expect(m(3).match('e-scooter')?.answer.label).toBe('Scooter');
+    const water = m(0);
+    expect(water.match('doing laundry')?.answer.label).toBe('Washing machine');
+    expect(water.match('dishwahser')?.answer.label).toBe('Dishwasher');
+    expect(water.match('Agriculture')?.answer.label).toBe('Farming');
+    expect(water.match('DENIM!')?.answer.label).toBe('Jeans');
+    expect(water.match('data centres')?.answer.label).toBe('Data centers'); // British spelling via typo tolerance
+    expect(m(1).match('traffic jams')?.answer.label).toBe('Traffic');
+    expect(m(1).match('back-seat drivers')?.answer.label).toBe('Backseat drivers');
+    expect(m(1).match('potholse')?.answer.label).toBe('Potholes');
+    expect(m(2).match('GoFundMe')?.answer.label).toBe('Crowdfunding');
+    expect(m(2).match('VCs')?.answer.label).toBe('Venture capital');
+    expect(m(3).match('red lights')?.answer.label).toBe('Traffic lights');
+    expect(m(3).match('pedestrains')?.answer.label).toBe('Pedestrians');
     expect(m(4).match("don't give up")?.answer.label).toBe('Don’t give up');
     expect(m(4).match('post mortem')?.answer.label).toBe('Post-mortem');
-    expect(m(5).match('Café')?.answer.label).toBe('Coffee shop');
+    expect(m(5).match('Introductions')?.answer.label).toBe('Introduce them to people');
+    expect(m(5).match('pay it forward')?.answer.label).toBe('Pay it forward');
   });
 
   it('rejects unrelated answers and does not stretch short words', () => {
-    const beach = m(0);
-    for (const bad of ['spaceship', 'car', 'cat', 'tax return', 'homework', 'zzzz', '', '   ', '!!!', 'dog']) {
-      expect(beach.match(bad), bad).toBeNull();
+    for (const bad of ['spaceship', 'cat', 'tax return', 'homework', 'zzzz', '', '   ', '!!!', 'pizza']) {
+      expect(m(0).match(bad), bad).toBeNull();
     }
     expect(m(3).match('bake')).toBeNull(); // not "bike": short words need exact matches
-    expect(m(3).match('trian')).not.toBeNull(); // 5 letters: one typo ok
+    expect(m(3).match('stop sing')).not.toBeNull(); // small typo in a longer answer is fine
     expect(m(1).match('call of duty')).toBeNull();
     expect(m(2).match('a pony')).toBeNull();
     expect(m(5).match('the moon')).toBeNull();
   });
 
   it('requires the same first letter for fuzzy matches', () => {
-    expect(m(0).match('powel')).toBeNull(); // not "towel"
+    expect(m(0).match('chower')).toBeNull(); // not "shower"
   });
 });

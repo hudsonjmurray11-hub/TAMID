@@ -48,7 +48,7 @@ The first visit must happen beforehand: a browser that has never loaded the app 
 
 1. The host opens `/host` on the projector. Players scan the QR code or type the four-letter code.
 2. The host picks a game length (3, 4, 4½ or 5 min) and presses **Start the trip** (Space).
-3. Each round, everyone gets the same prompt and types **one** answer. The first accepted answer locks in. If the game doesn't recognise an answer, the player can retry until time runs out. **Need an idea?** shows a few common answers.
+3. Each round, everyone gets the same prompt (for example, *Name something that uses a lot of water*) and types **one** answer. The first accepted answer locks in. If the game doesn't recognise an answer, the player can retry until time runs out. **Need an idea?** shows a few common answers.
 4. When the round closes, the game reveals rarity, the van surges forward, the class's answers are tallied, and a one-line "roadside fact" about Israel appears.
 5. After six rounds the finale shows the podium, then five "exit signs" answering the TAMID question, the competencies, and the crew.
 

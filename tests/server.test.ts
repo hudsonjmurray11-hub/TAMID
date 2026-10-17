@@ -169,7 +169,7 @@ describe('sessions & recovery', () => {
     const p = await client();
     await emitAck(p, 'player:join', { code, name: 'Keeper' });
     await emitAck(host, 'host:action', { type: 'start' });
-    await emitAck(p, 'player:submit', { round: 0, text: 'snorkel' });
+    await emitAck(p, 'player:submit', { round: 0, text: 'farming' });
     await until(() => hv.v?.phase === 'reveal');
     expect(hv.v!.leaderKm).toBe(35);
     await emitAck(host, 'host:action', { type: 'restart' });
@@ -188,7 +188,7 @@ describe('sessions & recovery', () => {
     await emitAck(q, 'player:join', { code, name: 'Too late' });
     await emitAck(host, 'host:action', { type: 'start' });
     await until(() => hv.v?.phase === 'reveal', 5000);
-    const r = await emitAck<SubmitResult>(q, 'player:submit', { round: 0, text: 'towel' });
+    const r = await emitAck<SubmitResult>(q, 'player:submit', { round: 0, text: 'shower' });
     expect(['closed', 'late']).toContain(r.status);
   });
 });

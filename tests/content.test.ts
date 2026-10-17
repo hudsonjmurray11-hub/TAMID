@@ -5,12 +5,12 @@ import { RoundMatcher, normalize } from '../shared/matcher';
 describe('content bank', () => {
   it('has six rounds with the required prompts', () => {
     expect(ROUNDS.map((r) => r.prompt)).toEqual([
-      'Name something you pack for a beach day.',
-      'Name something your phone helps you do.',
-      'Name something a new startup might need.',
-      'Name a way to get around a city.',
-      'Your first attempt flopped. Name a useful next move.',
-      'Name somewhere people find new ideas.',
+      'Name something that uses a lot of water.',
+      'Name something that makes a road trip annoying.',
+      'Name a way to raise money for a project.',
+      'Name something a self-driving car needs to notice.',
+      'Your first product flopped. Name a smart next move.',
+      'Name a way to help a friend starting something new.',
     ]);
   });
 
@@ -47,11 +47,11 @@ describe('content bank', () => {
     expect(COMPETENCIES.map((c) => c.title)).toEqual(['Pursuing Innovation', 'Cultivating Resilience', 'Empowering Leadership']);
   });
 
-  it('uses the sample beach rarities from the brief', () => {
+  it('ranks sample answers in the expected tiers', () => {
     const m = new RoundMatcher(ROUNDS[0]);
-    expect(m.match('Towel')?.answer.tier).toBe('common');
-    expect(m.match('Beach umbrella')?.answer.tier).toBe('uncommon');
-    expect(m.match('Snorkel')?.answer.tier).toBe('rare');
-    expect(m.match('First-aid kit')?.answer.tier).toBe('gem');
+    expect(m.match('Shower')?.answer.tier).toBe('common');
+    expect(m.match('Garden')?.answer.tier).toBe('uncommon');
+    expect(m.match('Farming')?.answer.tier).toBe('rare');
+    expect(m.match('Jeans')?.answer.tier).toBe('gem');
   });
 });
