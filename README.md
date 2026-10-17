@@ -172,4 +172,5 @@ All artwork is original and drawn in code. Fonts are Rubik, Overpass and Shrikha
 ## Verification status
 
 - ✅ Verified locally: production build, TypeScript, unit and integration tests (including a 40-client six-round game), the offline Demo reload with the server stopped (headless Chrome), and screenshots at 1920×1080 and 375×667.
-- ⚠️ Not verified: real physical phones (iOS/Android) and a live Render deployment. See `docs/rehearsal-checklist.md`.
+- ✅ Live on Render at https://next-stop-tel-aviv.onrender.com: a scripted round with 12 remote WebSocket clients scored correctly, reconnect worked, and the host QR code uses the public URL.
+- ⚠️ Not verified: real physical phones (iOS/Android). See `docs/rehearsal-checklist.md`.
